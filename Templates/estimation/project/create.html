@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+	New Project
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row text-center">
+		<h1>New Project</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-8 offset-md-2">
+			<form class="create" method="POST" action="{% url 'estimation:create_project' %}">
+				{% csrf_token %}
+				{{ form | crispy }}
+				<button class="primaryAction btn btn-primary" type="submit">Create</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+

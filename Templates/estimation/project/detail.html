@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+
+{% block title %} Project {{ project.name }} {% endblock title %}
+
+
+{%block content %}
+<div class="container">
+  <div class="row">
+    <h2 class="text-center">Project {{ project.name }} </a>
+  </div>
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      {% for project in projects %}
+        <a href="{% url 'estimation:detail_project' project.id %}">{{ project.name }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="row">
+    <h4 class="text-center">Boards</h4>
+    {% for board in boards %}
+      <li><a href="{% url 'estimation:detail_board' project.id board.id %}">{{ board.name }}</a></li>
+    {% endfor %}
+    <a href="{% url 'estimation:list_boards' project.id %}">All Board</a>
+  </div>
+  <div class="row">
+    <h4 class="text-center">Items</h4>
+    {% for item in items %}
+      <li><a href="{% url 'estimation:detail_item' project.id item.id %}">{{ item.name }}</a></li>
+    {% endfor %}
+    <a href="{% url 'estimation:list_items' project.id %}">All Item</a>
+  </div>
+  <div class="row">
+    <h4 class="text-center">Control Flows</h4>
+    {% for cf in control_flows %}
+      <li><a href="{% url 'estimation:detail_control_flow' project.id cf.id %}">{{ cf.name }}</a></li>
+    {% endfor %}
+    <a href="{% url 'estimation:list_control_flows' project.id %}">All Control Flow</a>
+  </div>
+</div>
+{% endblock content %}

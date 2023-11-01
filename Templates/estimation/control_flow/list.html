@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+
+{% block title %} Item {{ item.name }} {% endblock title %}
+
+
+{%block content %}
+<div class="container">
+  <div class="row">
+    <h2 class="text-center">
+        Item {{ item.name }}
+    </h2>
+  </div>
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Slug</th>
+            <th scope="col">Supply(V)</th>
+            <th scope="col">P(KW)</th>
+            <th scope="col">I(A)</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+          <th>{{ item.id }}</th>
+          <td>{{ item.name }}</td>
+          <td>{{ item.slug }}</td>
+          <td>Supply(V)</td>
+          <td>P(KW)</td>
+          <td>I(A)</td>
+          <td>
+            <a href="{% url 'estimation:edit_item' item.id %}">edit</a>
+            /
+            <a href="{% url 'estimation:delete_item' item.id %}">delete</a>
+          </td>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <a href="{% url 'estimation:create_item' %}">New Item</a>
+  </div>
+</div>
+{% endblock content %}
