@@ -63,7 +63,7 @@ THIRD_PARTY_APPS = [
     "crispy_bootstrap5",
 ]
 
-LOCAL_APPS = ["users"]
+LOCAL_APPS = ["users", "estimations"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = LOCAL_APPS + DJANGO_APPS + THIRD_PARTY_APPS
