@@ -5,8 +5,18 @@
 # Django
 from django.urls import path
 
-# Views
-from estimations.views import CreateItemView, CreateProjectView, DetailProjectView, ListItemsView, ListProjectsView
+# Views Items
+# Views Board
+# Views Project
+from estimations.views import (
+    CreateBoardView,
+    CreateItemView,
+    CreateProjectView,
+    DetailProjectView,
+    ListBoardsView,
+    ListItemsView,
+    ListProjectsView,
+)
 
 app_name = "estimations"
 urlpatterns = [
@@ -16,14 +26,14 @@ urlpatterns = [
     path("project/<int:project_pk>/edit/", view=CreateProjectView.as_view(), name="edit_project"),
     path("project/<int:project_pk>/delete/", view=CreateProjectView.as_view(), name="delete_project"),
     # Boards
-    path("project/<int:project_pk>/boards/", view=CreateProjectView.as_view(), name="list_boards"),
-    path("project/<int:project_pk>/new-board/", view=CreateProjectView.as_view(), name="create_board"),
+    path("project/<int:project_pk>/boards/", view=ListBoardsView.as_view(), name="list_boards"),
+    path("project/<int:project_pk>/new-board/", view=CreateBoardView.as_view(), name="create_board"),
     path("project/<int:project_pk>/board/<int:board_pk>/", view=DetailProjectView.as_view(), name="detail_board"),
     path("project/<int:project_pk>/board/<int:board_pk>/edit/", view=CreateProjectView.as_view(), name="edit_board"),
     path(
         "project/<int:project_pk>/board/<int:board_pk>/delete/",
         view=CreateProjectView.as_view(),
-        name="delete_project",
+        name="delete_board",
     ),
     # Items
     path("project/<int:project_pk>/items/", view=ListItemsView.as_view(), name="list_items"),

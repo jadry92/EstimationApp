@@ -13,7 +13,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-8 offset-md-2">
-			<form class="create" method="POST" action="{% url 'estimation:create_project' %}">
+			<form class="create" method="POST" action="{% url 'estimations:create_project' %}">
 				{% csrf_token %}
 				{{ form | crispy }}
 				<button class="primaryAction btn btn-primary" type="submit">Create</button>
@@ -22,4 +22,3 @@
 	</div>
 </div>
 {% endblock content %}
-

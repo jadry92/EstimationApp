@@ -39,6 +39,9 @@
   </head>
   <body>
     {% include "header.html" %}
+    <div class="d-flex flex-nowrap">
+    {% include "sidebar.html" %}
+    </div>
     </div>
       {% block content %}
         <p>Use this document as a way to quick start any new project.</p>
@@ -60,4 +63,3 @@
     {% endblock inline_javascript %}
   </body>
 </html>
-

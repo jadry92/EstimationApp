@@ -12,30 +12,30 @@
   <div class="row">
     <div class="col-md-8 offset-md-2">
       {% for project in projects %}
-        <a href="{% url 'estimation:detail_project' project.id %}">{{ project.name }}</a>
+        <a href="{% url 'estimations:detail_project' project.id %}">{{ project.name }}</a>
       {% endfor %}
     </div>
   </div>
   <div class="row">
     <h4 class="text-center">Boards</h4>
     {% for board in boards %}
-      <li><a href="{% url 'estimation:detail_board' project.id board.id %}">{{ board.name }}</a></li>
+      <li><a href="{% url 'estimations:detail_board' project.id board.id %}">{{ board.name }}</a></li>
     {% endfor %}
-    <a href="{% url 'estimation:list_boards' project.id %}">All Board</a>
+    <a href="{% url 'estimations:list_boards' project.id %}">All Board</a>
   </div>
   <div class="row">
     <h4 class="text-center">Items</h4>
     {% for item in items %}
-      <li><a href="{% url 'estimation:detail_item' project.id item.id %}">{{ item.name }}</a></li>
+      <li><a href="{% url 'estimations:detail_item' project.id item.id %}">{{ item.name }}</a></li>
     {% endfor %}
-    <a href="{% url 'estimation:list_items' project.id %}">All Item</a>
+    <a href="{% url 'estimations:list_items' project.id %}">All Item</a>
   </div>
   <div class="row">
     <h4 class="text-center">Control Flows</h4>
     {% for cf in control_flows %}
-      <li><a href="{% url 'estimation:detail_control_flow' project.id cf.id %}">{{ cf.name }}</a></li>
+      <li><a href="{% url 'estimations:detail_control_flow' project.id cf.id %}">{{ cf.name }}</a></li>
     {% endfor %}
-    <a href="{% url 'estimation:list_control_flows' project.id %}">All Control Flow</a>
+    <a href="{% url 'estimations:list_control_flows' project.id %}">All Control Flow</a>
   </div>
 </div>
 {% endblock content %}

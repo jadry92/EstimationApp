@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block titel %} List of Boards {% endblock titel %}
+
+
+{%block content %}
+  <div class="container">
+    <div class="row">
+      <h2 class="text-center">
+          Boards
+      </h2>
+    </div>
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Project</th>
+              <th scope="col">Name</th>
+              <th scope="col">Total I(A)</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for board in boards %}
+            <th>{{ board.id }}</th>
+            <td>{{ board.project.name }}</td>
+            <td>{{ board.name }}</td>
+            <td>{{ board.total_amps }}</td>
+            <td>
+              <a href="{% url 'estimations:edit_board' project_id board.id %}">edit</a>
+              /
+              <a href="{% url 'estimations:delete_board' project_id board.id %}">delete</a>
+            </td>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <a href="{% url 'estimations:create_board' project_id %}">New Board</a>
+    </div>
+  </div>
+{% endblock content %}
