@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 
-{% block title %} Item {{ item.name }} {% endblock title %}
+{% block title %} Control Flows {% endblock title %}
 
 
 {%block content %}
   <div class="container">
     <div class="row">
       <h2 class="text-center">
-          Item {{ item.name }}
+          Control Flows
       </h2>
     </div>
     <div class="row">
@@ -17,26 +17,28 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Slug</th>
-              <th scope="col">Supply(V)</th>
-              <th scope="col">P(KW)</th>
-              <th scope="col">I(A)</th>
+              <th scope="col">Project</th>
+              <th scope="col">Description</th>
+              <th scope="col">DI</th>
+              <th scope="col">DO</th>
+              <th scope="col">AI</th>
+              <th scope="col">AO</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
-          {% for item in items %}
-            <th>{{ item.id }}</th>
-            <td>{{ item.name }}</td>
-            <td>{{ item.slug }}</td>
-            <td>Supply(V)</td>
-            <td>P(KW)</td>
-            <td>I(A)</td>
+          {% for cf in control_flows %}
+            <th>{{ cf.id }}</th>
+            <td>{{ cf.project.name }}</td>
+            <td>{{ cf.description }}</td>
+            <td>{{ cf.digital_input_str }} - {{ cf.digital_input_num }}</td>
+            <td>{{ cf.digital_output_str }} - {{ cf.digital_output_num }}</td>
+            <td>{{ cf.analog_input_str }} - {{ cf.analog_input_num }}</td>
+            <td>{{ cf.analog_output_str }} - {{ cf.analog_output_num }}</td>
             <td>
-              <a href="{% url 'estimations:edit_item' item.id %}">edit</a>
+              <a href="{% url 'estimations:edit_control_flow' project_id cf.id %}">edit</a>
               /
-              <a href="{% url 'estimations:delete_item' item.id %}">delete</a>
+              <a href="{% url 'estimations:delete_control_flow' project_id cf.id %}">delete</a>
             </td>
           {% endfor %}
           </tbody>
@@ -44,7 +46,7 @@
       </div>
     </div>
     <div class="row">
-      <a href="{% url 'estimations:create_item' %}">New Item</a>
+      <a href="{% url 'estimations:create_control_flow' project_id %}">New Control Flow</a>
     </div>
   </div>
 {% endblock content %}

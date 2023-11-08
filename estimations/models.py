@@ -23,6 +23,9 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Board(models.Model):
     """
@@ -35,6 +38,9 @@ class Board(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Item(models.Model):
@@ -61,30 +67,38 @@ class Item(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class ControlFlow(models.Model):
     """
     This table is the control flow for the items
     """
 
-    project = models.ForeignKey("Board", on_delete=models.CASCADE, related_name="control_flow")
+    project = models.ForeignKey("Project", on_delete=models.CASCADE, related_name="control_flow")
     description = models.TextField(blank=True, null=True)
     extra_items = models.ManyToManyField("ExtraItems", related_name="control_flow", blank=True)
 
-    digital_input_num = models.PositiveSmallIntegerField(blank=True, null=True)
-    digital_input_str = models.CharField(max_length=255, blank=True, null=True)
-
-    digital_output_num = models.PositiveSmallIntegerField(blank=True, null=True)
-    digital_output_str = models.CharField(max_length=255, blank=True, null=True)
-
-    analog_input_num = models.PositiveSmallIntegerField(blank=True, null=True)
-    analog_input_str = models.CharField(max_length=255, blank=True, null=True)
-
-    analog_output_num = models.PositiveSmallIntegerField(blank=True, null=True)
-    analog_output_str = models.CharField(max_length=255, blank=True, null=True)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class IO_controller(models.Model):
+    """
+    This table is the IO controller
+    """
+
+    IO = [
+        ("DI", "Digital Input"),
+        ("DO", "Digital Output"),
+        ("AI", "Analog Input"),
+        ("AO", "Analog Output"),
+    ]
+
+    amount = models.PositiveSmallIntegerField()
+    name = models.CharField(max_length=255)
+    io_type = models.CharField(max_length=2, choices=IO, default="DI")
 
 
 class ExtraItems(models.Model):
@@ -94,3 +108,6 @@ class ExtraItems(models.Model):
 
     number = models.PositiveSmallIntegerField()
     name = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.name

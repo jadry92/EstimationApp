@@ -5,18 +5,17 @@
 # Django
 from django.urls import path
 
-# Views Items
 # Views Board
+from estimations.views.board import CreateBoardView, ListBoardsView
+
+# Views Control Flow
+from estimations.views.control_flow import CreateControlFlowView, ListControlFlowsView
+
+# Views Items
+from estimations.views.item import CreateItemView, ListItemsView
+
 # Views Project
-from estimations.views import (
-    CreateBoardView,
-    CreateItemView,
-    CreateProjectView,
-    DetailProjectView,
-    ListBoardsView,
-    ListItemsView,
-    ListProjectsView,
-)
+from estimations.views.project import CreateProjectView, DetailProjectView, ListProjectsView
 
 app_name = "estimations"
 urlpatterns = [
@@ -42,8 +41,10 @@ urlpatterns = [
     path("project/<int:project_pk>/item/<int:item_pk>/edit", view=CreateProjectView.as_view(), name="edit_item"),
     path("project/<int:project_pk>/item/<int:item_pk>/delete", view=CreateProjectView.as_view(), name="delete_item"),
     # Control
-    path("project/<int:project_pk>/control-flows/", view=CreateProjectView.as_view(), name="list_control_flows"),
-    path("project/<int:project_pk>/new-control-flow/", view=CreateProjectView.as_view(), name="create_control_flow"),
+    path("project/<int:project_pk>/control-flows/", view=ListControlFlowsView.as_view(), name="list_control_flows"),
+    path(
+        "project/<int:project_pk>/new-control-flow/", view=CreateControlFlowView.as_view(), name="create_control_flow"
+    ),
     path(
         "project/<int:project_pk>/control-flow/<int:control_flow_pk>/",
         view=CreateProjectView.as_view(),
