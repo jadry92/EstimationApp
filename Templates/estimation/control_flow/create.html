@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-
+{% load static i18n %}
 {% block title %} New Items {% endblock title %}
 
 
@@ -15,9 +15,50 @@
     <div class="col-md-8 offset-md-2">
       <form class="create" method="POST" action="{% url 'estimations:create_item' project_id %}">
 				{% csrf_token %}
-				{{ form | crispy }}
-				<button class="primaryAction btn btn-primary" type="submit">Create</button>
-			</form>
+        <div class="row mt-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+        </div>
+        <div class="row mt-2" id="IO-controller">
+          <label class="text-center"> IO Needed </label>
+          <div class="col-3">
+            <label for="IO-type" class="form-label">Type</label>
+            <select class="form-select" id="IO-type" name="IO-type">
+              <option value="Null">Null</option>
+              <option value="DI">Digital Input</option>
+              <option value="DO">Digital Output</option>
+              <option value="AI">Analog Input</option>
+              <option value="AO">Analog Output</option>
+            </select>
+          </div>
+          <div class="col-8">
+            <label for="IO-name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="IO-name" name="IO-name">
+          </div>
+          <div class="col-1">
+            <label for="IO-amount" class="form-label">Amount</label>
+            <input type="number" class="form-control" id="IO-amount" name="IO-amount" min="1">
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="ExtraItem">
+            <label class="form-check-label" for="ExtraItem">
+              Extra Device Needed
+            </label>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-2">
+            <button class="btn btn-outline-success btn-sm" type="button" id="addIO">
+              <i class="bi bi-plus-square"></i> Add IO
+            </button>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-2">
+            <button class="primaryAction btn btn-primary" type="submit">Create</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

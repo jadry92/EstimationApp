@@ -79,7 +79,7 @@ class ControlFlow(models.Model):
     project = models.ForeignKey("Project", on_delete=models.CASCADE, related_name="control_flow")
     description = models.TextField(blank=True, null=True)
     extra_items = models.ManyToManyField("ExtraItems", related_name="control_flow", blank=True)
-
+    IO_controller = models.ManyToManyField("IO_controller", related_name="control_flow", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
