@@ -5,13 +5,13 @@
 # Django
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.views.generic import CreateView, ListView
+from django.views.generic import FormView, ListView
 
 # Form
 from estimations.forms import ControlFlowForm
 
 # Models
-from estimations.models import ControlFlow
+from estimations.models import ControlFlow, Item
 
 
 class ListControlFlowsView(LoginRequiredMixin, ListView):
@@ -41,7 +41,7 @@ class ListControlFlowsView(LoginRequiredMixin, ListView):
         return queryset
 
 
-class CreateControlFlowView(LoginRequiredMixin, CreateView):
+class CreateControlFlowView(LoginRequiredMixin, FormView):
     """
     This view create a new control flow
     """
@@ -55,7 +55,9 @@ class CreateControlFlowView(LoginRequiredMixin, CreateView):
         Add project ID int he context
         """
         context = super().get_context_data(**kwargs)
-        context["project_id"] = self.kwargs.get(self.pk_url_kwarg)
+        project_id = self.kwargs.get(self.pk_url_kwarg)
+        context["project_id"] = project_id
+        context["fan_list"] = Item.objects.filter(project=project_id, item_type="fan")
         return context
 
     def get_success_url(self):
