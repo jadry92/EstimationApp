@@ -4,11 +4,12 @@
 
 # Django
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import FormView, ListView
+from django.views.generic import ListView, TemplateView
 
 # Form
-from estimations.forms import ControlFlowForm
+from estimations.forms import ControlFlowForm, ExtraItemsForm, IO_controllerForm
 
 # Models
 from estimations.models import ControlFlow, Item
@@ -41,12 +42,11 @@ class ListControlFlowsView(LoginRequiredMixin, ListView):
         return queryset
 
 
-class CreateControlFlowView(LoginRequiredMixin, FormView):
+class CreateControlFlowView(LoginRequiredMixin, TemplateView):
     """
     This view create a new control flow
     """
 
-    form_class = ControlFlowForm
     template_name = "estimation/control_flow/create.html"
     pk_url_kwarg = "project_pk"
 
@@ -65,14 +65,77 @@ class CreateControlFlowView(LoginRequiredMixin, FormView):
         Return to the project detail
         """
         project_id = self.kwargs.get(self.pk_url_kwarg)
-        return reverse("estimations:detail_project", kwargs={"project_pk": project_id})
+        return reverse("estimations:list_control_flows", kwargs={"project_pk": project_id})
 
-    def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
         """
-        Create the control flow row
+        Create a new control flow
         """
-        cf_instance = form.save(commit=False)
-        project_id = self.kwargs.get(self.pk_url_kwarg)
-        cf_instance.project_id = project_id
-        cf_instance.save()
-        return super().form_valid(form)
+        print(request.POST)
+        cf = {}
+
+        cf["project"] = self.kwargs.get(self.pk_url_kwarg)
+        fans_id = request.POST.getlist("fan-selected")
+        cf["notes"] = request.POST.get("notes")
+        io_list = []
+        io_count = 1
+        extra_item_list = []
+
+        while True:
+            if request.POST.getlist(f"IO-{io_count}-name"):
+                break
+
+            io_data = {}
+            io_data["name"] = request.POST.getlist(f"IO-{io_count}-name")
+
+            io_data["io_type"] = request.POST.getlist(f"IO-{io_count}-type")
+            io_data["amount"] = request.POST.getlist(f"IO-{io_count}-amount")
+            print(io_data)
+            if request.POST.get(f"IO-{io_count}-extra"):
+                extra_item = {}
+                extra_item["name"] = io_data["name"]
+                extra_item["amount"] = io_data["amount"]
+                extra_item_list.append(extra_item)
+
+            io_list.append(io_data)
+
+            io_count += 1
+
+        # IO
+        io_list_id = []
+        for io_data in io_list:
+            form = IO_controllerForm(io_data)
+            if form.is_valid():
+                instance = form.save()
+                io_list_id.append(instance.id)
+            else:
+                return self.render_to_response(self.get_context_data(form=form))
+
+        # Extra items
+        extra_item_list_id = []
+        for extra_item in extra_item_list:
+            form = ExtraItemsForm(extra_item)
+            if form.is_valid():
+                instance = form.save()
+                extra_item_list_id.append(instance.id)
+            else:
+                return self.render_to_response(self.get_context_data(form=form))
+
+        # Save the control flow
+        cf["extra_items"] = extra_item_list_id
+        cf["IO_controller"] = io_list_id
+
+        form = ControlFlowForm(cf)
+        if form.is_valid():
+            instance = form.save()
+            cf_id = instance.id
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+        # Add the fans to the control flow
+        for fan_id in fans_id:
+            fan = Item.objects.get(id=fan_id)
+            fan.control_flow = cf_id
+            fan.save()
+
+        return HttpResponseRedirect(self.get_success_url())

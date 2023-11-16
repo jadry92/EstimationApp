@@ -2,13 +2,21 @@
     Estimations Forms
 """
 
-from django import forms
-
 # Django
 from django.forms import ModelForm
 
 # Models
-from estimations.models import Board, ExtraItems, Item, Project
+from estimations.models import Board, ControlFlow, ExtraItems, IO_controller, Item, Project
+
+
+class IO_controllerForm(ModelForm):
+    """
+    IO Controller Form
+    """
+
+    class Meta:
+        model = IO_controller
+        fields = "__all__"
 
 
 class ProjectForm(ModelForm):
@@ -31,12 +39,14 @@ class ItemForm(ModelForm):
         exclude = ["project", "control_flow"]
 
 
-class ControlFlowForm(forms.Form):
+class ControlFlowForm(ModelForm):
     """
     Control Flow Form
     """
 
-    description = forms.Textarea()
+    class Meta:
+        model = ControlFlow
+        fields = "__all__"
 
 
 class ExtraItemsForm(ModelForm):

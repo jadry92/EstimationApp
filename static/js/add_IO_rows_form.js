@@ -1,33 +1,32 @@
 function create_form_IO(id_row) {
   const form_IO_html = `
-  <div class="row mt-2" id="${id_row}">
-  <div class="offset-10 col-3">
-    <button type="button" class="btn-close" aria-label="Close" id="${id_row}-close"></button>
-  </div>
-  <div class="col-3">
-    <label for="IO-type" class="form-label">Type</label>
-    <select class="form-select" id="IO-type" name="IO-type">
-      <option value="DI">Digital Input</option>
-      <option value="DO">Digital Output</option>
-      <option value="AI">Analog Input</option>
-      <option value="AO">Analog Output</option>
-    </select>
-  </div>
-  <div class="col-6">
-    <label for="IO-name" class="form-label">Name</label>
-    <input type="text" class="form-control" id="IO-name" name="IO-name">
-  </div>
-  <div class="col-2">
-    <label for="IO-amount" class="form-label">Amount</label>
-    <input type="number" class="form-control" id="IO-amount" name="IO-amount" min="1">
-  </div>
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" id="ExtraItem">
-    <label class="form-check-label" for="ExtraItem">
-      Extra Device Needed
-    </label>
-  </div>
-
+  <div class="row mt-2 input-group" id="${id_row}">
+    <div class="offset-10 col-3">
+      <button type="button" class="btn-close" aria-label="Close" id="${id_row}-close"></button>
+    </div>
+    <div class="col-3">
+      <label for="IO-type" class="form-label">Type</label>
+      <select class="form-select" id="${id_row}-type" name="${id_row}-type">
+        <option value="DI">Digital Input</option>
+        <option value="DO">Digital Output</option>
+        <option value="AI">Analog Input</option>
+        <option value="AO">Analog Output</option>
+      </select>
+    </div>
+    <div class="col-6">
+      <label for="IO-name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="${id_row}-name" name="${id_row}-name">
+    </div>
+    <div class="col-2">
+      <label for="IO-amount" class="form-label">Amount</label>
+      <input type="number" class="form-control" id="${id_row}-amount" name="${id_row}-amount" min="1">
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="${id_row}-extra" name="${id_row}-extra">
+      <label class="form-check-label" for="${id_row}-extra">
+        Extra Device Needed
+      </label>
+    </div>
   </div>
   `;
 
@@ -71,14 +70,10 @@ button_add_fan.addEventListener('click', (event) => {
 });
 
 function create_form_fan(id_row) {
+  const fan_list_select = document.getElementById('fan-list-select');
   const form_fan_html = `
   <div class="input-group" id="${id_row}">
-    <select class="form-select" name="fan-select">
-      <option value="DI">Digital Input</option>
-      <option value="DO">Digital Output</option>
-      <option value="AI">Analog Input</option>
-      <option value="AO">Analog Output</option>
-    </select>
+    ${fan_list_select.outerHTML}
     <button class="btn btn-outline-danger btn-sm" type="button" id="${id_row}-close">
     <i class="bi bi-dash-square"></i> Remove
   </div>
