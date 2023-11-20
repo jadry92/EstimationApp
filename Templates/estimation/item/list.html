@@ -27,17 +27,19 @@
         </thead>
         <tbody>
         {% for item in items %}
-          <th>{{ item.id }}</th>
-          <td>{{ item.name }}</td>
-          <td>{{ item.slug }}</td>
-          <td>{{ item.get_voltage_supply_display }}</td>
-          <td>{{ item.power }}</td>
-          <td>{{ item.current}}</td>
-          <td>
-            <a href="{% url 'estimations:edit_item' project_id item.id %}">edit</a>
-            /
-            <a href="{% url 'estimations:delete_item' project_id item.id %}">delete</a>
-          </td>
+          <tr>
+            <th>{{ item.id }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.slug }}</td>
+            <td>{{ item.get_voltage_supply_display }}</td>
+            <td>{{ item.power }}</td>
+            <td>{{ item.current}}</td>
+            <td>
+              <a href="{% url 'estimations:edit_item' project_id item.id %}">edit</a>
+              /
+              <a href="{% url 'estimations:delete_item' project_id item.id %}">delete</a>
+            </td>
+          </tr>
         {% endfor %}
         </tbody>
       </table>

@@ -12,7 +12,7 @@ from estimations.views.board import CreateBoardView, ListBoardsView
 from estimations.views.control_flow import CreateControlFlowView, ListControlFlowsView
 
 # Views Items
-from estimations.views.item import CreateItemView, ListItemsView
+from estimations.views.item import CreateItemView, DeleteItemView, EditItemView, ListItemsView
 
 # Views Project
 from estimations.views.project import CreateProjectView, DetailProjectView, ListProjectsView
@@ -35,11 +35,11 @@ urlpatterns = [
         name="delete_board",
     ),
     # Items
-    path("project/<int:project_pk>/items/", view=ListItemsView.as_view(), name="list_items"),
-    path("project/<int:project_pk>/new-item/", view=CreateItemView.as_view(), name="create_item"),
     path("project/<int:project_pk>/item/<int:item_pk>/", view=CreateProjectView.as_view(), name="detail_item"),
-    path("project/<int:project_pk>/item/<int:item_pk>/edit", view=CreateProjectView.as_view(), name="edit_item"),
-    path("project/<int:project_pk>/item/<int:item_pk>/delete", view=CreateProjectView.as_view(), name="delete_item"),
+    path("project/<int:project_pk>/item/<int:item_pk>/edit/", view=EditItemView.as_view(), name="edit_item"),
+    path("project/<int:project_pk>/item/<int:item_pk>/delete/", view=DeleteItemView.as_view(), name="delete_item"),
+    path("project/<int:project_pk>/new-item/", view=CreateItemView.as_view(), name="create_item"),
+    path("project/<int:project_pk>/items/", view=ListItemsView.as_view(), name="list_items"),
     # Control
     path("project/<int:project_pk>/control-flows/", view=ListControlFlowsView.as_view(), name="list_control_flows"),
     path(

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} Delete {{ object.name }}{% endblock title %}
+
+
+{%block content %}
+<div class="container mt-5">
+  <div class="row">
+    <h2 class="text-center">
+      Are you sure about to delete {{ object.name }} - {{ object.slug }} ?
+    </h2>
+  </div>
+  <div class="row mt-">
+    <div class="col-md-2 offset-md-2">
+      <form class="delete" method="POST" action="{% url 'estimations:delete_item' project_id object.id %}">
+				{% csrf_token %}
+				{{ form | crispy }}
+				<button class="primaryAction btn btn-danger" type="summit">Delete</button>
+			</form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

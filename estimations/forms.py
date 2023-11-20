@@ -2,6 +2,8 @@
     Estimations Forms
 """
 
+from django.core.exceptions import ValidationError
+
 # Django
 from django.forms import ModelForm
 
@@ -33,6 +35,24 @@ class ItemForm(ModelForm):
     """
     Item Form
     """
+
+    def __init__(self, *args, **kwargs):
+        self.project_id = kwargs.pop("project_id")
+        super().__init__(*args, **kwargs)
+
+    def clean_slug(self):
+        """
+        This method clear the slug field
+        """
+        slug = self.cleaned_data["slug"]
+        if self.instance and self.instance.slug == slug:
+            return slug
+
+        exists = Item.objects.filter(slug=slug, project_id=self.project_id).exists()
+        if exists:
+            raise ValidationError("The slug already exists")
+
+        return self.cleaned_data["slug"]
 
     class Meta:
         model = Item
