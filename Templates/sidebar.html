@@ -1,0 +1,63 @@
+{% if project %}
+  <div class="row">
+    <div class="offset-1 col-11">
+      <i class="bi bi-arrow-down-square"></i>
+      <a href="{% url "estimations:detail_project" project.id %}">
+        {{ project.name }}
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="offset-2 col-10">
+      <i class="bi bi-arrow-right-square"></i>
+      <a href="{% url "estimations:list_boards" project.id %}">
+        All Board
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="offset-2 col-10">
+      <i class="bi bi-arrow-right-square"></i>
+      <a href="{% url "estimations:list_items" project.id %}">
+        All Fans/AC
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="offset-2 col-10">
+      <i class="bi bi-arrow-right-square"></i>
+      <a href="{% url "estimations:list_control_flows" project.id %}">
+        All Control Flow
+      </a>
+    </div>
+  </div>
+{% elif projects %}
+
+  <div class="row">
+    <div class="offset-1 col-11">
+      <i class="bi bi-arrow-down-square"></i>
+      <a href="{% url "estimations:list_projects" %}">
+        All projects
+      </a>
+    </div>
+  </div>
+  {% for p in projects %}
+    <div class="row">
+      <div class="offset-2 col-10">
+        <i class="bi bi-arrow-right-square"></i>
+        <a href="{% url "estimations:detail_project" p.id %}">
+          {{ p.name }}
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="row">
+    <div class="offset-1 col-11">
+      <i class="bi bi-arrow-right-square"></i>
+      <a href="{% url "estimations:list_projects" %}">
+        All projects
+      </a>
+    </div>
+  </div>
+{% endif %}

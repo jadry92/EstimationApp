@@ -12,7 +12,7 @@
       </h2>
     </div>
     <div class="row">
-      <div class="col-md-8 offset-md-2">
+      <div class="col-12">
         <table class="table">
           <thead>
             <tr>
@@ -28,24 +28,26 @@
           </thead>
           <tbody>
           {% for cf in control_flows %}
-            <th>{{ cf.id }}</th>
-            <td>{{ cf.project.name }}</td>
-            <td>{{ cf.description }}</td>
-            <td>{{ cf.digital_input_str }} - {{ cf.digital_input_num }}</td>
-            <td>{{ cf.digital_output_str }} - {{ cf.digital_output_num }}</td>
-            <td>{{ cf.analog_input_str }} - {{ cf.analog_input_num }}</td>
-            <td>{{ cf.analog_output_str }} - {{ cf.analog_output_num }}</td>
-            <td>
-              <a href="{% url 'estimations:edit_control_flow' project_id cf.id %}">edit</a>
-              /
-              <a href="{% url 'estimations:delete_control_flow' project_id cf.id %}">delete</a>
-            </td>
+            <tr>
+              <th>{{ cf.id }}</th>
+              <td>{{ cf.project.name }}</td>
+              <td>{{ cf.description }}</td>
+              <td>{{ cf.digital_input_str }} - {{ cf.digital_input_num }}</td>
+              <td>{{ cf.digital_output_str }} - {{ cf.digital_output_num }}</td>
+              <td>{{ cf.analog_input_str }} - {{ cf.analog_input_num }}</td>
+              <td>{{ cf.analog_output_str }} - {{ cf.analog_output_num }}</td>
+              <td>
+                <a href="{% url 'estimations:edit_control_flow' project_id cf.id %}">edit</a>
+                /
+                <a href="{% url 'estimations:delete_control_flow' project_id cf.id %}">delete</a>
+              </td>
+            </tr>
           {% endfor %}
           </tbody>
         </table>
       </div>
     </div>
-    <div class="row">
+    <div class="row text-center">
       <a href="{% url 'estimations:create_control_flow' project_id %}">New Control Flow</a>
     </div>
   </div>
