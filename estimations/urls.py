@@ -6,7 +6,7 @@
 from django.urls import path
 
 # Views Board
-from estimations.views.board import CreateBoardView, ListBoardsView
+from estimations.views.board import CreateBoardView, DeleteBoardView, EditBoardView, ListBoardsView
 
 # Views Control Flow
 from estimations.views.control_flow import CreateControlFlowView, ListControlFlowsView
@@ -28,10 +28,10 @@ urlpatterns = [
     path("project/<int:project_pk>/boards/", view=ListBoardsView.as_view(), name="list_boards"),
     path("project/<int:project_pk>/new-board/", view=CreateBoardView.as_view(), name="create_board"),
     path("project/<int:project_pk>/board/<int:board_pk>/", view=DetailProjectView.as_view(), name="detail_board"),
-    path("project/<int:project_pk>/board/<int:board_pk>/edit/", view=CreateProjectView.as_view(), name="edit_board"),
+    path("project/<int:project_pk>/board/<int:board_pk>/edit/", view=EditBoardView.as_view(), name="edit_board"),
     path(
         "project/<int:project_pk>/board/<int:board_pk>/delete/",
-        view=CreateProjectView.as_view(),
+        view=DeleteBoardView.as_view(),
         name="delete_board",
     ),
     # Items
@@ -51,12 +51,12 @@ urlpatterns = [
         name="detail_control_flow",
     ),
     path(
-        "project/<int:project_pk>/control-flow/<int:control_flow_pk>/edit",
+        "project/<int:project_pk>/control-flow/<int:control_flow_pk>/edit/",
         view=CreateProjectView.as_view(),
         name="edit_control_flow",
     ),
     path(
-        "project/<int:project_pk>/control-flow/<int:control_flow_pk>/delete",
+        "project/<int:project_pk>/control-flow/<int:control_flow_pk>/delete/",
         view=CreateProjectView.as_view(),
         name="delete_control_flow",
     ),

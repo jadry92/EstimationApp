@@ -84,6 +84,25 @@ class BoardForm(ModelForm):
     Board Form
     """
 
+    def __init__(self, *args, **kwargs):
+        self.project_id = kwargs.pop("project_id")
+        super().__init__(*args, **kwargs)
+
+    def clean_name(self):
+        """
+        The name of the board must be unique
+        """
+        name = self.cleaned_data["name"]
+        name = name.upper()
+        if self.instance and self.instance.name == name:
+            return name
+
+        exists = Board.objects.filter(name=name, project_id=self.project_id).exists()
+        if exists:
+            raise ValidationError("The name already exists")
+
+        return name
+
     class Meta:
         model = Board
-        fields = "__all__"
+        exclude = ["project", "total_amps"]

@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} Edit Board {% endblock title %}
+
+
+{%block content %}
+<div class="container">
+  <div class="row">
+    <h2 class="text-center">
+        Items
+    </h2>
+  </div>
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <form class="create" method="POST" action="{% url 'estimations:edit_board' project_id object.id %}">
+				{% csrf_token %}
+				{{ form | crispy }}
+				<button class="primaryAction btn btn-primary" type="submit">Create</button>
+			</form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
