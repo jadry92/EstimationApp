@@ -1,13 +1,11 @@
-"""
-    Estimation Views
-"""
+""" Estimation Views """
 
 
 # Django
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 # Form
 from estimations.forms import ProjectForm
@@ -24,6 +22,12 @@ class ListProjectsView(LoginRequiredMixin, ListView):
     model = Project
     template_name = "estimation/project/list.html"
     context_object_name = "projects"
+
+    def get_queryset(self):
+        """
+        Return all the projects created by the user
+        """
+        return Project.objects.all()
 
 
 class CreateProjectView(LoginRequiredMixin, CreateView):
@@ -55,3 +59,23 @@ class DetailProjectView(LoginRequiredMixin, DetailView):
     model = Project
     pk_url_kwarg = "project_pk"
     template_name = "estimation/project/detail.html"
+
+
+class DeleteProjectView(LoginRequiredMixin, DeleteView):
+    """
+    This view is to delete the project
+    """
+
+    model = Project
+    pk_url_kwarg = "project_pk"
+    template_name = "estimation/project/delete.html"
+
+
+class EditProjectView(LoginRequiredMixin, UpdateView):
+    """
+    This view edit view
+    """
+
+    form = ProjectForm
+    pk_url_kwarg = "project_pk"
+    template_name = "estimation/project/edit.html"

@@ -5,18 +5,24 @@
 
 
 {%block content %}
-<div class="container">
   <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <ul>
+    <div class="col-12 text-center">
+      <h1>Projects</h1>
+    </div>
+  <div class="row">
+    <div class="col-12">
+      <ol class="list-group">
         {% for project in projects %}
-          <li><a href="{% url 'estimations:detail_project' project.id %}">{{ project.name }}</a></li>
+          <li class="list-group-item">
+            <a href="{% url 'estimations:detail_project' project.id %}">more</a>
+          </li>
         {% endfor %}
-      </ul>
+      </ol>
     </div>
   </div>
   <div class="row">
-    <a href="{% url 'estimations:create_project' %}">New Project</a>
+    <div class="offset-10 col-2 mt-5">
+      <a class="btn btn-primary" href="{% url 'estimations:create_project' %}">New Project</a>
+    </div>
   </div>
-</div>
 {% endblock content %}
