@@ -23,12 +23,6 @@ class ListProjectsView(LoginRequiredMixin, ListView):
     template_name = "estimation/project/list.html"
     context_object_name = "projects"
 
-    def get_queryset(self):
-        """
-        Return all the projects created by the user
-        """
-        return Project.objects.all()
-
 
 class CreateProjectView(LoginRequiredMixin, CreateView):
     """

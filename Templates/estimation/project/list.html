@@ -14,7 +14,14 @@
       <ol class="list-group">
         {% for project in projects %}
           <li class="list-group-item">
-            <a href="{% url 'estimations:detail_project' project.id %}">more</a>
+            <a href="{% url 'estimations:detail_project' project.id %}">{{ project.name }}</a>
+            <ol class="list-group">
+              {% for board in project.boards.all %}
+              <li class="list-group-item">
+                {{ board.name }} - name
+              </li>
+              {% endfor %}
+            </ol>
           </li>
         {% endfor %}
       </ol>
